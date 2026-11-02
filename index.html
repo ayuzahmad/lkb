@@ -370,13 +370,7 @@
   <!-- LOGIN MODAL -->
   <div id="authOverlay" class="auth-overlay no-print">
     <div class="auth-card">
-      <h3 style="text-align: center; margin-bottom: 16px;">Masuk Aplikasi LKB</h3>
-      <div id="scriptSetupBox" style="display:none; margin-bottom: 12px;">
-        <label style="font-size: 0.75rem; font-weight:600;">URL Google Apps Script:</label>
-        <input type="text" id="inputScriptUrl" class="form-control" placeholder="https://script.google.com/macros/s/.../exec">
-        <button class="btn btn-dark btn-sm" style="width:100%; margin-top:6px;" onclick="saveScriptUrl()">Simpan URL</button>
-        <hr style="margin: 10px 0;">
-      </div>
+      <h3 style="text-align: center; margin-bottom: 20px;">Masuk Aplikasi LKB</h3>
       <form onsubmit="handleLogin(event)">
         <div class="form-group">
           <label>Username</label>
@@ -386,11 +380,8 @@
           <label>Password</label>
           <input type="password" id="loginPassword" class="form-control" required placeholder="Masukkan password">
         </div>
-        <button type="submit" id="btnLoginSubmit" class="btn btn-print" style="width: 100%; justify-content: center; margin-top: 10px;">Masuk Akun</button>
+        <button type="submit" id="btnLoginSubmit" class="btn btn-print" style="width: 100%; justify-content: center; margin-top: 14px;">Masuk Akun</button>
       </form>
-      <div style="text-align: center; margin-top: 12px;">
-        <a href="#" style="font-size: 0.75rem; color: var(--primary);" onclick="toggleScriptSetup()">⚙️ Pengaturan Database API</a>
-      </div>
     </div>
   </div>
 
@@ -619,8 +610,22 @@
         </div>
       </div>
 
-      <!-- MENU 4: DATA USER (KHUSUS ADMIN) -->
+      <!-- MENU 4: DATA USER & KONFIGURASI API (KHUSUS ADMIN) -->
       <div id="tab-user" class="tab-content" style="display: none;">
+        
+        <!-- CARD KHUSUS ADMIN: PENGATURAN API DATABASE -->
+        <div class="card" style="border: 1px solid #94a3b8; background: #f8fafc;">
+          <div class="card-title" style="color: #0f172a;">⚙️ Pengaturan Database API (Google Apps Script)</div>
+          <p style="font-size: 0.75rem; color: #64748b; margin-bottom: 8px;">
+            Hanya Admin yang dapat melihat dan mengganti URL ini untuk seluruh aplikasi.
+          </p>
+          <div class="form-group">
+            <label>Web App URL Google Apps Script:</label>
+            <input type="text" id="inputAdminScriptUrl" class="form-control" placeholder="https://script.google.com/macros/s/.../exec">
+          </div>
+          <button type="button" class="btn btn-dark btn-sm" onclick="saveAdminScriptUrl()">💾 Simpan URL API Baru</button>
+        </div>
+
         <div class="card">
           <div class="card-title">👥 KELOLA DATA USER (KHUSUS ADMIN)</div>
           
@@ -781,7 +786,9 @@
   </div>
 
   <script>
-    let scriptUrl = localStorage.getItem('lkb_apps_script_url') || '';
+    // HARDCODED DEFAULT API URL FROM USER
+    const DEFAULT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx1PEgLvD0-yyGMxOHed_q8iSA5Yd_IM7X8CStM5be18Z4WNdDz_uSvXmaWFRBPGGHf/exec';
+    let scriptUrl = localStorage.getItem('lkb_apps_script_url') || DEFAULT_SCRIPT_URL;
     let currentUser = JSON.parse(localStorage.getItem('lkb_current_user')) || null;
     let kegiatanList = [];
     let presetList = [];
@@ -798,27 +805,22 @@
       }
     });
 
-    function toggleScriptSetup() {
-      const box = document.getElementById('scriptSetupBox');
-      box.style.display = box.style.display === 'none' ? 'block' : 'none';
-    }
-
-    function saveScriptUrl() {
-      const url = document.getElementById('inputScriptUrl').value.trim();
+    // SIMPAN API URL DARI MENU ADMIN
+    function saveAdminScriptUrl() {
+      const url = document.getElementById('inputAdminScriptUrl').value.trim();
       if (url) {
         scriptUrl = url;
         localStorage.setItem('lkb_apps_script_url', scriptUrl);
-        alert('URL Database Apps Script tersimpan!');
-        toggleScriptSetup();
+        alert('URL Google Apps Script API berhasil diperbarui!');
+      } else {
+        alert('URL API tidak boleh kosong!');
       }
     }
 
     async function handleLogin(e) {
       e.preventDefault();
       if (!scriptUrl) {
-        alert('Silakan atur Web App URL Apps Script terlebih dahulu!');
-        toggleScriptSetup();
-        return;
+        scriptUrl = DEFAULT_SCRIPT_URL;
       }
 
       const u = document.getElementById('loginUsername').value.trim();
@@ -863,12 +865,12 @@
       document.getElementById('txtUserNama').innerText = currentUser.nama;
       document.getElementById('txtUserRole').innerText = currentUser.role;
 
-      // Show Tab Data User if Admin
-      if (currentUser.role === 'admin') {
+      // Pengecekan Role Admin
+      if (currentUser && currentUser.role && String(currentUser.role).trim().toLowerCase() === 'admin') {
         document.getElementById('btnTabUser').style.display = 'inline-flex';
       }
 
-      // Load User Profiles into form
+      // Populate Profil Form
       document.getElementById('profNama').value = currentUser.nama || '';
       document.getElementById('profNip').value = currentUser.nip || '';
       document.getElementById('profJabatan').value = currentUser.jabatan || '';
@@ -884,6 +886,8 @@
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
       document.querySelectorAll('.tab-content').forEach(content => content.style.display = 'none');
 
+      const isUserAdmin = currentUser && currentUser.role && String(currentUser.role).trim().toLowerCase() === 'admin';
+
       if (tabName === 'input') {
         document.getElementById('btnTabInput').classList.add('active');
         document.getElementById('tab-input').style.display = 'block';
@@ -893,9 +897,10 @@
       } else if (tabName === 'profil') {
         document.getElementById('btnTabProfil').classList.add('active');
         document.getElementById('tab-profil').style.display = 'block';
-      } else if (tabName === 'user' && currentUser.role === 'admin') {
+      } else if (tabName === 'user' && isUserAdmin) {
         document.getElementById('btnTabUser').classList.add('active');
         document.getElementById('tab-user').style.display = 'block';
+        document.getElementById('inputAdminScriptUrl').value = scriptUrl;
         loadAdminUsers();
       }
     }
@@ -935,7 +940,6 @@
     }
 
     function renderPresets() {
-      // 1. Render in Tab 1 (Input Chips)
       const chipsContainer = document.getElementById('presetChipsList');
       chipsContainer.innerHTML = '';
 
@@ -952,7 +956,6 @@
         });
       }
 
-      // 2. Render in Tab 2 (Management List)
       const listContainer = document.getElementById('customPresetList');
       document.getElementById('presetCount').innerText = presetList.length;
       listContainer.innerHTML = '';
