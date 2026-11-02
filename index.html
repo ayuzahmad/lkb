@@ -578,3 +578,729 @@
               <label>Pangkat / Golongan</label>
               <input type="text" id="profPangkat" class="form-control" placeholder="III / a" oninput="updatePrintMeta()">
             </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label>Jabatan</label>
+              <input type="text" id="profJabatan" class="form-control" placeholder="Guru Informatika" oninput="updatePrintMeta()">
+            </div>
+            <div class="form-group">
+              <label>Unit Kerja</label>
+              <input type="text" id="profUnitKerja" class="form-control" placeholder="MTsN 19 Jakarta Selatan" oninput="updatePrintMeta()">
+            </div>
+          </div>
+
+          <div class="section-title-orange" style="margin-top: 14px;">Identitas Atasan / Pimpinan</div>
+          <div class="form-group">
+            <label>Nama Pimpinan & Gelar</label>
+            <input type="text" id="profNamaPimpinan" class="form-control" placeholder="Contoh: H. Cholis, S.Ag, M.Pd" oninput="updatePrintMeta()">
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label>Jabatan Pimpinan</label>
+              <input type="text" id="profJabatanPimpinan" class="form-control" placeholder="Kepala MTsN 19 Jakarta" oninput="updatePrintMeta()">
+            </div>
+            <div class="form-group">
+              <label>NIP Pimpinan</label>
+              <input type="text" id="profNipPimpinan" class="form-control" placeholder="197205121998031002" oninput="updatePrintMeta()">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Kota Tempat Laporan</label>
+            <input type="text" id="profKota" class="form-control" value="Jakarta" oninput="updatePrintMeta()">
+          </div>
+
+          <button type="button" class="btn btn-dark" style="width: 100%; justify-content: center; margin-top: 10px;" onclick="saveProfilData()">
+            ✓ Simpan Data Profil
+          </button>
+        </div>
+      </div>
+
+      <!-- MENU 4: DATA USER (KHUSUS ADMIN) -->
+      <div id="tab-user" class="tab-content" style="display: none;">
+        <div class="card">
+          <div class="card-title">👥 KELOLA DATA USER (KHUSUS ADMIN)</div>
+          
+          <!-- FORM TAMBAH USER BARU -->
+          <form onsubmit="handleAdminSaveUser(event)" style="margin-bottom: 16px;">
+            <div class="section-title-orange">Tambah / Edit User Baru</div>
+            <div class="grid-2">
+              <div class="form-group">
+                <label>Username *</label>
+                <input type="text" id="adminUsername" class="form-control" required placeholder="username_guru">
+              </div>
+              <div class="form-group">
+                <label>Password (Default: pondoklabu)</label>
+                <input type="text" id="adminPassword" class="form-control" value="pondoklabu" required>
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="form-group">
+                <label>Nama Lengkap & Gelar</label>
+                <input type="text" id="adminNama" class="form-control" required placeholder="Nama Guru">
+              </div>
+              <div class="form-group">
+                <label>NIP</label>
+                <input type="text" id="adminNip" class="form-control" placeholder="NIP">
+              </div>
+            </div>
+
+            <div class="grid-3">
+              <div class="form-group">
+                <label>Jabatan</label>
+                <input type="text" id="adminJabatan" class="form-control" placeholder="Guru Ahli Pertama">
+              </div>
+              <div class="form-group">
+                <label>Unit Kerja</label>
+                <input type="text" id="adminUnitKerja" class="form-control" placeholder="Sekolah">
+              </div>
+              <div class="form-group">
+                <label>Role</label>
+                <select id="adminRole" class="form-control">
+                  <option value="guru">Guru</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-orange" style="width: 100%; justify-content: center;">
+              + Simpan User Baru
+            </button>
+          </form>
+
+          <hr style="margin: 14px 0; border: none; border-top: 1px solid var(--border-color);">
+
+          <!-- DAFTAR USER TERDAFTAR -->
+          <div style="font-size: 0.8rem; font-weight: 700; margin-bottom: 8px;">Daftar User Terdaftar</div>
+          <table class="table-custom">
+            <thead>
+              <tr>
+                <th>Username</th>
+                <th>Nama Guru</th>
+                <th>Role</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="adminUserTableBody">
+              <!-- Loaded dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN: LIVE PREVIEW A4 PAPER -->
+    <div class="preview-container">
+      <div class="preview-header no-print">
+        <span>🟢 Preview Dokumen LKB (A4)</span>
+        <span>Margin: Left 3cm, Top/Right/Bottom 2cm</span>
+      </div>
+
+      <div class="paper-a4">
+        <!-- TITLE -->
+        <div class="doc-title-block">
+          <h2>LAPORAN KINERJA BULANAN</h2>
+          <h3 id="printBulanTahun">BULAN NOVEMBER 2026</h3>
+        </div>
+
+        <!-- METADATA TABLE -->
+        <table class="meta-table">
+          <tr>
+            <td style="width: 22%;"><strong>NAMA</strong></td>
+            <td style="width: 2%;">:</td>
+            <td id="viewNama">...................................................</td>
+          </tr>
+          <tr>
+            <td><strong>NIP</strong></td>
+            <td>:</td>
+            <td id="viewNip">...................................................</td>
+          </tr>
+          <tr>
+            <td><strong>PANGKAT/GOL</strong></td>
+            <td>:</td>
+            <td id="viewPangkat">...................................................</td>
+          </tr>
+          <tr>
+            <td><strong>JABATAN</strong></td>
+            <td>:</td>
+            <td id="viewJabatan">...................................................</td>
+          </tr>
+          <tr>
+            <td><strong>UNIT KERJA</strong></td>
+            <td>:</td>
+            <td id="viewUnitKerja">...................................................</td>
+          </tr>
+        </table>
+
+        <!-- MAIN LKB TABLE -->
+        <table class="lkb-table">
+          <thead>
+            <tr>
+              <th style="width: 5%;">NO</th>
+              <th style="width: 15%;">HARI/TANGGAL</th>
+              <th style="width: 12%;">JAM</th>
+              <th style="width: 38%;">URAIAN TUGAS/PEKERJAAN</th>
+              <th style="width: 12%;">OUTPUT/HASIL</th>
+              <th style="width: 10%;">VOLUME</th>
+              <th style="width: 8%;">KET</th>
+              <th class="action-col no-print" style="width: 8%;">AKSI</th>
+            </tr>
+          </thead>
+          <tbody id="lkbTableBody">
+            <!-- Dynamic Content -->
+          </tbody>
+        </table>
+
+        <!-- SIGNATURES -->
+        <div class="signature-block">
+          <div class="sig-box">
+            <div>Mengetahui,</div>
+            <div id="viewJabatanPimpinan">(Jabatan Pimpinan)</div>
+            <div class="sig-space"></div>
+            <div class="sig-name" id="viewNamaPimpinan">(Nama Pimpinan)</div>
+            <div>NIP. <span id="viewNipPimpinan">.......................</span></div>
+          </div>
+          
+          <div class="sig-box">
+            <div><span id="viewKota">Jakarta</span>, <span id="viewTglAkhir">30 November 2026</span></div>
+            <div>Yang bersangkutan,</div>
+            <div class="sig-space"></div>
+            <div class="sig-name" id="viewNamaPegawai">(Nama Pegawai)</div>
+            <div>NIP. <span id="viewNipPegawai">.......................</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    let scriptUrl = localStorage.getItem('lkb_apps_script_url') || '';
+    let currentUser = JSON.parse(localStorage.getItem('lkb_current_user')) || null;
+    let kegiatanList = [];
+    let presetList = [];
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const now = new Date();
+      document.getElementById('selectBulan').value = String(now.getMonth() + 1).padStart(2, '0');
+      document.getElementById('inputTahun').value = now.getFullYear();
+
+      if (currentUser) {
+        initSession();
+      } else {
+        document.getElementById('authOverlay').style.display = 'flex';
+      }
+    });
+
+    function toggleScriptSetup() {
+      const box = document.getElementById('scriptSetupBox');
+      box.style.display = box.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function saveScriptUrl() {
+      const url = document.getElementById('inputScriptUrl').value.trim();
+      if (url) {
+        scriptUrl = url;
+        localStorage.setItem('lkb_apps_script_url', scriptUrl);
+        alert('URL Database Apps Script tersimpan!');
+        toggleScriptSetup();
+      }
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      if (!scriptUrl) {
+        alert('Silakan atur Web App URL Apps Script terlebih dahulu!');
+        toggleScriptSetup();
+        return;
+      }
+
+      const u = document.getElementById('loginUsername').value.trim();
+      const p = document.getElementById('loginPassword').value.trim();
+      const btn = document.getElementById('btnLoginSubmit');
+
+      btn.disabled = true;
+      btn.innerText = 'Memeriksa...';
+
+      try {
+        const res = await fetch(scriptUrl, {
+          method: 'POST',
+          body: JSON.stringify({ action: 'login', username: u, password: p })
+        }).then(r => r.json());
+
+        if (res.success) {
+          currentUser = res.user;
+          localStorage.setItem('lkb_current_user', JSON.stringify(currentUser));
+          initSession();
+        } else {
+          alert(res.message || 'Login gagal!');
+        }
+      } catch (err) {
+        alert('Terjadi kesalahan koneksi: ' + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerText = 'Masuk Akun';
+      }
+    }
+
+    function logout() {
+      if (confirm('Keluar dari aplikasi?')) {
+        localStorage.removeItem('lkb_current_user');
+        location.reload();
+      }
+    }
+
+    function initSession() {
+      document.getElementById('authOverlay').style.display = 'none';
+      document.getElementById('userBadgeHeader').style.display = 'flex';
+      document.getElementById('btnLogout').style.display = 'inline-flex';
+      document.getElementById('txtUserNama').innerText = currentUser.nama;
+      document.getElementById('txtUserRole').innerText = currentUser.role;
+
+      // Show Tab Data User if Admin
+      if (currentUser.role === 'admin') {
+        document.getElementById('btnTabUser').style.display = 'inline-flex';
+      }
+
+      // Load User Profiles into form
+      document.getElementById('profNama').value = currentUser.nama || '';
+      document.getElementById('profNip').value = currentUser.nip || '';
+      document.getElementById('profJabatan').value = currentUser.jabatan || '';
+      document.getElementById('profUnitKerja').value = currentUser.unit_kerja || '';
+
+      loadPresets();
+      updatePrintMeta();
+      loadLKBData();
+    }
+
+    // SWITCH TAB LOGIC
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.style.display = 'none');
+
+      if (tabName === 'input') {
+        document.getElementById('btnTabInput').classList.add('active');
+        document.getElementById('tab-input').style.display = 'block';
+      } else if (tabName === 'preset') {
+        document.getElementById('btnTabPreset').classList.add('active');
+        document.getElementById('tab-preset').style.display = 'block';
+      } else if (tabName === 'profil') {
+        document.getElementById('btnTabProfil').classList.add('active');
+        document.getElementById('tab-profil').style.display = 'block';
+      } else if (tabName === 'user' && currentUser.role === 'admin') {
+        document.getElementById('btnTabUser').classList.add('active');
+        document.getElementById('tab-user').style.display = 'block';
+        loadAdminUsers();
+      }
+    }
+
+    function setQuickTime(val) {
+      document.getElementById('inputKegJam').value = val;
+    }
+
+    // PRESET LOGIC
+    function loadPresets() {
+      const saved = localStorage.getItem(`lkb_presets_${currentUser.username}`);
+      presetList = saved ? JSON.parse(saved) : [];
+      renderPresets();
+    }
+
+    function savePresetsToStorage() {
+      localStorage.setItem(`lkb_presets_${currentUser.username}`, JSON.stringify(presetList));
+      renderPresets();
+    }
+
+    function handleSavePreset(e) {
+      e.preventDefault();
+      const newPreset = {
+        label: document.getElementById('presetLabel').value.trim(),
+        jam: document.getElementById('presetJam').value.trim() || '07.00',
+        volume: document.getElementById('presetVolume').value.trim() || '1 kegiatan',
+        uraian: document.getElementById('presetUraian').value.trim(),
+        output: document.getElementById('presetOutput').value.trim() || 'Terlaksana'
+      };
+
+      presetList.push(newPreset);
+      savePresetsToStorage();
+
+      document.getElementById('presetLabel').value = '';
+      document.getElementById('presetUraian').value = '';
+      alert('Preset berhasil ditambahkan!');
+    }
+
+    function renderPresets() {
+      // 1. Render in Tab 1 (Input Chips)
+      const chipsContainer = document.getElementById('presetChipsList');
+      chipsContainer.innerHTML = '';
+
+      if (presetList.length === 0) {
+        chipsContainer.innerHTML = `<span style="font-size: 0.75rem; color: #94a3b8; font-style: italic;">Belum ada preset. Klik "Kelola Preset" untuk menambahkan.</span>`;
+      } else {
+        presetList.forEach(p => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'preset-chip';
+          btn.innerText = `⚡ ${p.label}`;
+          btn.onclick = () => applyPreset(p);
+          chipsContainer.appendChild(btn);
+        });
+      }
+
+      // 2. Render in Tab 2 (Management List)
+      const listContainer = document.getElementById('customPresetList');
+      document.getElementById('presetCount').innerText = presetList.length;
+      listContainer.innerHTML = '';
+
+      if (presetList.length === 0) {
+        listContainer.innerHTML = `<p style="font-size: 0.75rem; color: #94a3b8; text-align: center; padding: 10px 0;">Belum ada tombol cepat. Tambahkan melalui form di atas.</p>`;
+      } else {
+        presetList.forEach((p, idx) => {
+          const div = document.createElement('div');
+          div.style.cssText = 'display:flex; justify-content:space-between; align-items:center; padding:8px 10px; border:1px solid #cbd5e1; border-radius:6px; margin-bottom:6px; font-size:0.8rem;';
+          div.innerHTML = `
+            <div>
+              <strong>${p.label}</strong>
+              <div style="font-size:0.75rem; color:#64748b;">${p.jam} | ${p.uraian}</div>
+            </div>
+            <button class="btn btn-danger btn-sm" onclick="deletePreset(${idx})">🗑️ Hapus</button>
+          `;
+          listContainer.appendChild(div);
+        });
+      }
+    }
+
+    function applyPreset(p) {
+      document.getElementById('inputKegJam').value = p.jam;
+      document.getElementById('inputKegUraian').value = p.uraian;
+      document.getElementById('inputKegOutput').value = p.output;
+      document.getElementById('inputKegVolume').value = p.volume;
+      alert(`Preset "${p.label}" diterapkan!`);
+    }
+
+    function deletePreset(idx) {
+      if (confirm('Hapus preset ini?')) {
+        presetList.splice(idx, 1);
+        savePresetsToStorage();
+      }
+    }
+
+    function loadStandardPresets() {
+      presetList = [
+        { label: "Presensi Kehadiran", jam: "06.30", volume: "1 kegiatan", uraian: "Melakukan presensi kehadiran harian dan persiapan tugas mengajar", output: "Terlaksana" },
+        { label: "Mengajar KBM", jam: "07.00 - 12.00", volume: "1 kegiatan", uraian: "Melaksanakan kegiatan proses belajar mengajar (KBM) di kelas", output: "Terlaksana" },
+        { label: "Piket Sekolah", jam: "07.00 - 14.00", volume: "1 kegiatan", uraian: "Melaksanakan tugas guru piket sekolah dan penegakan kedisiplinan siswa", output: "Terlaksana" },
+        { label: "Koreksi Tugas", jam: "13.00 - 14.30", volume: "1 kegiatan", uraian: "Memeriksa dan menilai lembar tugas harian siswa", output: "Terlaksana" }
+      ];
+      savePresetsToStorage();
+    }
+
+    // UPDATE PRINT & META
+    function updatePrintMeta() {
+      const nama = document.getElementById('profNama').value || '...................................................';
+      const nip = document.getElementById('profNip').value || '...................................................';
+      const pangkat = document.getElementById('profPangkat').value || '...................................................';
+      const jabatan = document.getElementById('profJabatan').value || '...................................................';
+      const unit = document.getElementById('profUnitKerja').value || '...................................................';
+
+      document.getElementById('viewNama').innerText = nama;
+      document.getElementById('viewNip').innerText = nip;
+      document.getElementById('viewPangkat').innerText = pangkat;
+      document.getElementById('viewJabatan').innerText = jabatan;
+      document.getElementById('viewUnitKerja').innerText = unit;
+
+      document.getElementById('viewNamaPegawai').innerText = document.getElementById('profNama').value ? `(${document.getElementById('profNama').value})` : '(Nama Pegawai)';
+      document.getElementById('viewNipPegawai').innerText = document.getElementById('profNip').value || '.......................';
+
+      const kota = document.getElementById('profKota').value || 'Jakarta';
+      document.getElementById('viewKota').innerText = kota;
+
+      const jPimpinan = document.getElementById('profJabatanPimpinan').value || '(Jabatan Pimpinan)';
+      const nPimpinan = document.getElementById('profNamaPimpinan').value || '(Nama Pimpinan)';
+      const nipPimpinan = document.getElementById('profNipPimpinan').value || '.......................';
+
+      document.getElementById('viewJabatanPimpinan').innerText = jPimpinan;
+      document.getElementById('viewNamaPimpinan').innerText = nPimpinan ? `(${nPimpinan})` : '(Nama Pimpinan)';
+      document.getElementById('viewNipPimpinan').innerText = nipPimpinan;
+
+      const m = document.getElementById('selectBulan').value;
+      const y = document.getElementById('inputTahun').value;
+      const monthNames = ["JANUARI", "FEBRUARI", "MARET", "APRIL", "MEI", "JUNI", "JULI", "AGUSTUS", "SEPTEMBER", "OKTOBER", "NOVEMBER", "DESEMBER"];
+      document.getElementById('printBulanTahun').innerText = `BULAN ${monthNames[parseInt(m)-1]} ${y}`;
+
+      const lastDay = new Date(y, parseInt(m), 0).getDate();
+      document.getElementById('viewTglAkhir').innerText = `${lastDay} ${monthNames[parseInt(m)-1].toLowerCase()} ${y}`;
+    }
+
+    function saveProfilData() {
+      autoSaveLKB();
+      alert('Data Profil berhasil disimpan!');
+    }
+
+    // LKB DATA MANAGEMENT
+    async function loadLKBData() {
+      if (!currentUser || !scriptUrl) return;
+
+      const m = document.getElementById('selectBulan').value;
+      const y = document.getElementById('inputTahun').value;
+      const bulanTahun = `${y}-${m}`;
+
+      updatePrintMeta();
+
+      try {
+        const res = await fetch(scriptUrl, {
+          method: 'POST',
+          body: JSON.stringify({ action: 'getLKB', username: currentUser.username, bulan_tahun: bulanTahun })
+        }).then(r => r.json());
+
+        if (res.success && res.data) {
+          kegiatanList = res.data.kegiatan_json ? JSON.parse(res.data.kegiatan_json) : [];
+          if (res.data.atasan_nama) document.getElementById('profNamaPimpinan').value = res.data.atasan_nama;
+          if (res.data.atasan_nip) document.getElementById('profNipPimpinan').value = res.data.atasan_nip;
+        } else {
+          kegiatanList = [];
+        }
+        renderTable();
+        updatePrintMeta();
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function handleSaveKegiatan(e) {
+      e.preventDefault();
+      const idx = parseInt(document.getElementById('editItemIndex').value);
+      
+      const item = {
+        tanggal: document.getElementById('inputKegTanggal').value,
+        jam: document.getElementById('inputKegJam').value,
+        uraian: document.getElementById('inputKegUraian').value.trim(),
+        output: document.getElementById('inputKegOutput').value.trim(),
+        volume: document.getElementById('inputKegVolume').value.trim(),
+        ket: document.getElementById('inputKegKeterangan').value.trim()
+      };
+
+      if (idx >= 0) {
+        kegiatanList[idx] = item;
+      } else {
+        kegiatanList.push(item);
+      }
+
+      kegiatanList.sort((a, b) => a.tanggal.localeCompare(b.tanggal));
+      resetForm();
+      renderTable();
+      autoSaveLKB();
+    }
+
+    function resetForm() {
+      document.getElementById('editItemIndex').value = "-1";
+      document.getElementById('inputKegUraian').value = "";
+      document.getElementById('inputKegKeterangan').value = "";
+      document.getElementById('btnSubmitKegiatan').innerText = "+ Tambahkan ke Laporan";
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('lkbTableBody');
+      tbody.innerHTML = '';
+
+      if (kegiatanList.length === 0) {
+        const mName = document.getElementById('printBulanTahun').innerText;
+        tbody.innerHTML = `<tr><td colspan="8" class="text-center" style="padding: 30px; color: #94a3b8; font-style: italic;">Belum ada data kegiatan pada ${mName.toLowerCase()}.</td></tr>`;
+        return;
+      }
+
+      kegiatanList.forEach((item, idx) => {
+        const tr = document.createElement('tr');
+        const d = new Date(item.tanggal);
+        const dateFormatted = d.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'short', year: 'numeric' });
+
+        tr.innerHTML = `
+          <td class="text-center">${idx + 1}</td>
+          <td>${dateFormatted}</td>
+          <td class="text-center">${item.jam}</td>
+          <td>${item.uraian}</td>
+          <td class="text-center">${item.output}</td>
+          <td class="text-center">${item.volume}</td>
+          <td class="text-center">${item.ket || '-'}</td>
+          <td class="action-col no-print text-center">
+            <button class="btn btn-outline btn-sm" onclick="editItem(${idx})">✏️</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteItem(${idx})">🗑️</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function editItem(idx) {
+      const item = kegiatanList[idx];
+      document.getElementById('editItemIndex').value = idx;
+      document.getElementById('inputKegTanggal').value = item.tanggal;
+      document.getElementById('inputKegJam').value = item.jam;
+      document.getElementById('inputKegUraian').value = item.uraian;
+      document.getElementById('inputKegOutput').value = item.output;
+      document.getElementById('inputKegVolume').value = item.volume;
+      document.getElementById('inputKegKeterangan').value = item.ket || '';
+      document.getElementById('btnSubmitKegiatan').innerText = "💾 Update Kegiatan";
+    }
+
+    function deleteItem(idx) {
+      if (confirm('Hapus item kegiatan ini?')) {
+        kegiatanList.splice(idx, 1);
+        renderTable();
+        autoSaveLKB();
+      }
+    }
+
+    async function autoSaveLKB() {
+      if (!currentUser || !scriptUrl) return;
+      const m = document.getElementById('selectBulan').value;
+      const y = document.getElementById('inputTahun').value;
+
+      await fetch(scriptUrl, {
+        method: 'POST',
+        body: JSON.stringify({
+          action: 'saveLKB',
+          username: currentUser.username,
+          bulan_tahun: `${y}-${m}`,
+          kegiatan_json: JSON.stringify(kegiatanList),
+          atasan_nama: document.getElementById('profNamaPimpinan').value,
+          atasan_nip: document.getElementById('profNipPimpinan').value
+        })
+      });
+    }
+
+    // ADMIN USER MANAGEMENT
+    async function loadAdminUsers() {
+      const tbody = document.getElementById('adminUserTableBody');
+      tbody.innerHTML = '<tr><td colspan="4">Memuat data user...</td></tr>';
+
+      try {
+        const res = await fetch(scriptUrl, {
+          method: 'POST',
+          body: JSON.stringify({ action: 'getUsers' })
+        }).then(r => r.json());
+
+        if (res.success) {
+          tbody.innerHTML = '';
+          res.users.forEach(u => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td><strong>${u.username}</strong></td>
+              <td>${u.nama}</td>
+              <td><span style="background:#e2e8f0; padding:2px 6px; border-radius:4px; font-size:0.7rem; font-weight:bold;">${u.role}</span></td>
+              <td style="display:flex; gap:4px;">
+                <button class="btn btn-outline btn-sm" onclick="resetUserPassword('${u.username}', '${u.nama}', '${u.nip}', '${u.jabatan}', '${u.unit_kerja}', '${u.role}')">🔑 Reset Pass</button>
+                <button class="btn btn-danger btn-sm" onclick="deleteUserByAdmin('${u.username}')">🗑️ Hapus</button>
+              </td>
+            `;
+            tbody.appendChild(tr);
+          });
+        }
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="4" style="color:red">Error: ${err.message}</td></tr>`;
+      }
+    }
+
+    async function handleAdminSaveUser(e) {
+      e.preventDefault();
+      const userData = {
+        username: document.getElementById('adminUsername').value.trim(),
+        password: document.getElementById('adminPassword').value.trim() || 'pondoklabu',
+        nama: document.getElementById('adminNama').value.trim(),
+        nip: document.getElementById('adminNip').value.trim(),
+        jabatan: document.getElementById('adminJabatan').value.trim(),
+        unit_kerja: document.getElementById('adminUnitKerja').value.trim(),
+        role: document.getElementById('adminRole').value
+      };
+
+      try {
+        const res = await fetch(scriptUrl, {
+          method: 'POST',
+          body: JSON.stringify({ action: 'saveUser', userData: userData })
+        }).then(r => r.json());
+
+        if (res.success) {
+          alert(`User ${userData.username} berhasil disimpan!`);
+          document.getElementById('adminUsername').value = '';
+          document.getElementById('adminNama').value = '';
+          document.getElementById('adminNip').value = '';
+          loadAdminUsers();
+        }
+      } catch (err) {
+        alert('Gagal menyimpan user: ' + err.message);
+      }
+    }
+
+    async function resetUserPassword(username, nama, nip, jabatan, unit_kerja, role) {
+      if (confirm(`Reset password user '${username}' ke password default ('pondoklabu')?`)) {
+        const userData = {
+          username: username,
+          password: 'pondoklabu',
+          nama: nama,
+          nip: nip,
+          jabatan: jabatan,
+          unit_kerja: unit_kerja,
+          role: role
+        };
+
+        try {
+          const res = await fetch(scriptUrl, {
+            method: 'POST',
+            body: JSON.stringify({ action: 'saveUser', userData: userData })
+          }).then(r => r.json());
+
+          if (res.success) {
+            alert(`Password untuk '${username}' berhasil di-reset menjadi 'pondoklabu'!`);
+            loadAdminUsers();
+          }
+        } catch (err) {
+          alert('Gagal reset password: ' + err.message);
+        }
+      }
+    }
+
+    async function deleteUserByAdmin(targetUsername) {
+      if (confirm(`Hapus akun '${targetUsername}'?`)) {
+        try {
+          const res = await fetch(scriptUrl, {
+            method: 'POST',
+            body: JSON.stringify({ action: 'deleteUser', targetUsername: targetUsername })
+          }).then(r => r.json());
+
+          if (res.success) {
+            loadAdminUsers();
+          }
+        } catch (err) {
+          alert('Gagal menghapus: ' + err.message);
+        }
+      }
+    }
+
+    function exportToExcel() {
+      if (kegiatanList.length === 0) {
+        alert('Tidak ada data kegiatan untuk diexport!');
+        return;
+      }
+      const data = kegiatanList.map((item, index) => ({
+        "No": index + 1,
+        "Tanggal": item.tanggal,
+        "Jam": item.jam,
+        "Uraian Tugas / Pekerjaan": item.uraian,
+        "Output / Hasil": item.output,
+        "Volume": item.volume,
+        "Keterangan": item.ket || ''
+      }));
+
+      const ws = XLSX.utils.json_to_sheet(data);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "LKB");
+      XLSX.writeFile(wb, `LKB_${currentUser.username}_${document.getElementById('inputTahun').value}_${document.getElementById('selectBulan').value}.xlsx`);
+    }
+  </script>
+</body>
+</html>
