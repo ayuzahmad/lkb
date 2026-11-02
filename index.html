@@ -13,8 +13,9 @@
       --card-bg: #ffffff;
       --primary: #2563eb;
       --primary-dark: #1d4ed8;
+      --accent-orange: #d97706;
+      --accent-orange-dark: #b45309;
       --success: #10b981;
-      --success-dark: #059669;
       --border-color: #cbd5e1;
       --text-main: #0f172a;
       --text-muted: #64748b;
@@ -33,7 +34,7 @@
       min-height: 100vh;
     }
 
-    /* HEADER STYLING */
+    /* HEADER */
     .app-header {
       background-color: var(--header-bg);
       color: white;
@@ -60,19 +61,10 @@
       font-size: 0.9rem;
       padding: 6px 10px;
       border-radius: 6px;
-      letter-spacing: 0.5px;
     }
 
-    .header-title-box h1 {
-      font-size: 1.1rem;
-      font-weight: 700;
-      line-height: 1.2;
-    }
-
-    .header-title-box p {
-      font-size: 0.75rem;
-      color: #94a3b8;
-    }
+    .header-title-box h1 { font-size: 1.1rem; font-weight: 700; line-height: 1.2; }
+    .header-title-box p { font-size: 0.75rem; color: #94a3b8; }
 
     .header-actions {
       display: flex;
@@ -96,11 +88,13 @@
     }
 
     .btn-excel { background-color: var(--success); color: white; }
-    .btn-excel:hover { background-color: var(--success-dark); }
+    .btn-excel:hover { background-color: #059669; }
     .btn-print { background-color: var(--primary); color: white; }
     .btn-print:hover { background-color: var(--primary-dark); }
     .btn-dark { background-color: #0f172a; color: white; }
     .btn-dark:hover { background-color: #1e293b; }
+    .btn-orange { background-color: var(--accent-orange); color: white; }
+    .btn-orange:hover { background-color: var(--accent-orange-dark); }
     .btn-outline { background-color: transparent; border: 1px solid var(--border-color); color: var(--text-main); }
     .btn-outline:hover { background-color: #e2e8f0; }
     .btn-danger { background-color: #ef4444; color: white; }
@@ -121,10 +115,45 @@
       .app-body { grid-template-columns: 1fr; }
     }
 
+    /* NAV TABS */
+    .nav-tabs {
+      display: flex;
+      gap: 6px;
+      background: white;
+      padding: 6px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      margin-bottom: 16px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      text-align: center;
+      padding: 8px 10px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+      color: var(--text-muted);
+      background: transparent;
+      border: none;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .tab-btn.active {
+      background: #0f172a;
+      color: white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
     /* CARDS & FORMS */
     .card {
       background: var(--card-bg);
-      border-radius: 8px;
+      border-radius: 10px;
       border: 1px solid var(--border-color);
       padding: 16px;
       margin-bottom: 16px;
@@ -143,31 +172,11 @@
       justify-content: space-between;
     }
 
-    .nav-tabs {
-      display: flex;
-      gap: 6px;
-      background: #e2e8f0;
-      padding: 4px;
-      border-radius: 8px;
-      margin-bottom: 16px;
-    }
-
-    .tab-item {
-      flex: 1;
-      text-align: center;
-      padding: 8px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      border-radius: 6px;
-      cursor: pointer;
-      color: var(--text-muted);
-      transition: 0.2s;
-    }
-
-    .tab-item.active {
-      background: white;
-      color: var(--primary);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    .section-title-orange {
+      color: var(--accent-orange);
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 10px;
     }
 
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -192,13 +201,28 @@
 
     .form-control:focus { outline: 2px solid var(--primary); border-color: transparent; }
 
-    /* PRESET QUICK BUTTONS */
-    .quick-tags {
+    /* PRESET QUICK BUTTONS CHIPS */
+    .preset-chips-container {
       display: flex;
+      flex-wrap: wrap;
       gap: 6px;
-      margin-top: 4px;
+      margin-top: 6px;
     }
 
+    .preset-chip {
+      background: #f1f5f9;
+      border: 1px solid var(--border-color);
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: #334155;
+      transition: all 0.2s;
+    }
+    .preset-chip:hover { background: #e2e8f0; border-color: #94a3b8; }
+
+    .quick-tags { display: flex; gap: 6px; margin-top: 4px; }
     .tag-btn {
       background: #e2e8f0;
       border: none;
@@ -209,7 +233,7 @@
     }
     .tag-btn:hover { background: #cbd5e1; }
 
-    /* LIVE PREVIEW A4 PAPER */
+    /* PREVIEW CONTAINER A4 */
     .preview-container {
       position: sticky;
       top: 75px;
@@ -233,7 +257,7 @@
       width: 210mm;
       min-height: 297mm;
       margin: 0 auto;
-      padding: 20mm 20mm 20mm 30mm; /* Left 3cm, Top/Right/Bottom 2cm */
+      padding: 20mm 20mm 20mm 30mm;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       color: #000;
     }
@@ -243,7 +267,6 @@
       margin-bottom: 24px;
       font-family: 'Times New Roman', Times, serif;
     }
-
     .doc-title-block h2 { font-size: 13pt; font-weight: bold; text-transform: uppercase; }
     .doc-title-block h3 { font-size: 12pt; font-weight: bold; text-transform: uppercase; }
 
@@ -254,28 +277,18 @@
       font-family: 'Times New Roman', Times, serif;
       border-collapse: collapse;
     }
-
     .meta-table td { padding: 2px 0; vertical-align: top; }
 
-    /* LKB TABLE */
     .lkb-table {
       width: 100%;
       border-collapse: collapse;
       font-size: 9.5pt;
       font-family: 'Times New Roman', Times, serif;
     }
-
-    .lkb-table th, .lkb-table td {
-      border: 1px solid #000;
-      padding: 6px 5px;
-      vertical-align: top;
-    }
-
+    .lkb-table th, .lkb-table td { border: 1px solid #000; padding: 6px 5px; vertical-align: top; }
     .lkb-table th { text-align: center; font-weight: bold; }
-
     .text-center { text-align: center; }
 
-    /* SIGNATURES */
     .signature-block {
       margin-top: 40px;
       display: flex;
@@ -284,12 +297,11 @@
       font-family: 'Times New Roman', Times, serif;
       page-break-inside: avoid;
     }
-
     .sig-box { width: 45%; text-align: center; }
     .sig-space { height: 60px; }
     .sig-name { font-weight: bold; text-decoration: underline; }
 
-    /* AUTH MODAL & OVERLAY */
+    /* AUTH OVERLAY */
     .auth-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -299,7 +311,6 @@
       align-items: center;
       z-index: 999;
     }
-
     .auth-card {
       background: white;
       width: 360px;
@@ -307,6 +318,20 @@
       border-radius: 10px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     }
+
+    /* TABLE CUSTOM USER ADMIN */
+    .table-custom {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 0.8rem;
+    }
+    .table-custom th, .table-custom td {
+      border: 1px solid var(--border-color);
+      padding: 6px 8px;
+      text-align: left;
+    }
+    .table-custom th { background: #f1f5f9; }
 
     /* PRINT STYLING */
     @media print {
@@ -338,7 +363,6 @@
       </div>
       <button class="btn btn-excel" onclick="exportToExcel()">📊 Export Excel</button>
       <button class="btn btn-print" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
-      <button id="btnAdminModal" class="btn btn-outline" style="color:white; border-color:#475569; display:none;" onclick="openAdminModal()">⚙️ Kelola Akun</button>
       <button id="btnLogout" class="btn btn-danger btn-sm" style="display:none;" onclick="logout()">🚪 Keluar</button>
     </div>
   </header>
@@ -376,18 +400,20 @@
     <!-- LEFT COLUMN: CONTROLS & FORM -->
     <div class="no-print">
       
-      <!-- NAV TABS -->
+      <!-- 4 MENU NAV TABS -->
       <div class="nav-tabs">
-        <div class="tab-item active" onclick="switchTab('tab-input')">📝 Input Kegiatan</div>
-        <div class="tab-item" onclick="switchTab('tab-profil')">👤 Profil & Atasan</div>
+        <button class="tab-btn active" id="btnTabInput" onclick="switchTab('input')">📝 Input Kegiatan</button>
+        <button class="tab-btn" id="btnTabPreset" onclick="switchTab('preset')">⚡ Preset</button>
+        <button class="tab-btn" id="btnTabProfil" onclick="switchTab('profil')">👤 Profil</button>
+        <button class="tab-btn" id="btnTabUser" style="display: none;" onclick="switchTab('user')">👥 Data User</button>
       </div>
 
-      <!-- TAB 1: INPUT KEGIATAN -->
-      <div id="tab-input">
+      <!-- MENU 1: INPUT KEGIATAN -->
+      <div id="tab-input" class="tab-content">
         
         <!-- CARD PERIODE LAPORAN -->
         <div class="card">
-          <div class="card-title">📅 Periode Laporan</div>
+          <div class="card-title">📅 PERIODE LAPORAN</div>
           <div class="grid-2">
             <div class="form-group">
               <label>Bulan</label>
@@ -413,9 +439,20 @@
           </div>
         </div>
 
-        <!-- CARD FORM KEGIATAN -->
+        <!-- CARD TOMBOL CEPAT PRESET -->
         <div class="card">
-          <div class="card-title">✍️ Tambah Kegiatan Harian</div>
+          <div class="card-title">
+            <span>⚡ Tombol Cepat (Preset Tugas)</span>
+            <a href="#" style="font-size: 0.75rem; color: var(--accent-orange); text-decoration: none;" onclick="switchTab('preset')">+ Kelola Preset</a>
+          </div>
+          <div id="presetChipsList" class="preset-chips-container">
+            <span style="font-size: 0.75rem; color: #94a3b8; font-style: italic;">Belum ada preset. Klik "Kelola Preset" untuk menambahkan.</span>
+          </div>
+        </div>
+
+        <!-- CARD FORM INPUT KEGIATAN HARIAN -->
+        <div class="card">
+          <div class="card-title">✍️ TAMBAH KEGIATAN HARIAN</div>
           <form onsubmit="handleSaveKegiatan(event)">
             <input type="hidden" id="editItemIndex" value="-1">
             
@@ -426,11 +463,11 @@
               </div>
               <div class="form-group">
                 <label>Jam (cth: 06.30)</label>
-                <input type="text" id="inputKegJam" class="form-control" placeholder="06.30 - 14.00" required>
+                <input type="text" id="inputKegJam" class="form-control" placeholder="06.30" required>
                 <div class="quick-tags">
-                  <button type="button" class="tag-btn" onclick="setQuickTime('06.30 - 14.00')">06.30</button>
-                  <button type="button" class="tag-btn" onclick="setQuickTime('07.00 - 12.00')">07.00</button>
-                  <button type="button" class="tag-btn" onclick="setQuickTime('13.00 - 15.00')">15.00</button>
+                  <button type="button" class="tag-btn" onclick="setQuickTime('06.30')">06.30</button>
+                  <button type="button" class="tag-btn" onclick="setQuickTime('07.00')">07.00</button>
+                  <button type="button" class="tag-btn" onclick="setQuickTime('15.00')">15.00</button>
                 </div>
               </div>
             </div>
@@ -461,52 +498,197 @@
             </button>
           </form>
         </div>
+
       </div>
 
-      <!-- TAB 2: PROFIL & ATASAN -->
-      <div id="tab-profil" style="display: none;">
+      <!-- MENU 2: PRESET (KELOLA TOMBOL CEPAT) -->
+      <div id="tab-preset" class="tab-content" style="display: none;">
         <div class="card">
-          <div class="card-title">👤 Profil Pegawai</div>
-          <div class="form-group">
-            <label>Nama Pegawai</label>
-            <input type="text" id="profNama" class="form-control" oninput="updatePrintMeta()">
-          </div>
-          <div class="form-group">
-            <label>NIP</label>
-            <input type="text" id="profNip" class="form-control" oninput="updatePrintMeta()">
-          </div>
-          <div class="form-group">
-            <label>Pangkat / Golongan</label>
-            <input type="text" id="profPangkat" class="form-control" placeholder="Penata Muda / III/a" oninput="updatePrintMeta()">
-          </div>
-          <div class="form-group">
-            <label>Jabatan</label>
-            <input type="text" id="profJabatan" class="form-control" oninput="updatePrintMeta()">
-          </div>
-          <div class="form-group">
-            <label>Unit Kerja</label>
-            <input type="text" id="profUnitKerja" class="form-control" oninput="updatePrintMeta()">
-          </div>
+          <div class="card-title">⚡ KELOLA TOMBOL CEPAT (CUSTOM PRESETS)</div>
+          <p style="font-size: 0.75rem; color: #64748b; margin-bottom: 14px;">
+            Atur tombol pintas tugas mengajar/rutin sesuai kebutuhan Anda.
+          </p>
+
+          <form onsubmit="handleSavePreset(event)">
+            <div class="section-title-orange">Tambah Tombol Cepat Baru</div>
+            
+            <div class="form-group">
+              <label>Nama / Label Tombol *</label>
+              <input type="text" id="presetLabel" class="form-control" placeholder="Contoh: Mengajar Kelas 8.1 / Presensi" required>
+            </div>
+
+            <div class="grid-2">
+              <div class="form-group">
+                <label>Jam Default</label>
+                <input type="text" id="presetJam" class="form-control" placeholder="07.00 - 08.20">
+              </div>
+              <div class="form-group">
+                <label>Volume Default</label>
+                <input type="text" id="presetVolume" class="form-control" value="1 kegiatan">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Uraian Tugas Default *</label>
+              <input type="text" id="presetUraian" class="form-control" placeholder="Contoh: Mengajar Informatika di kelas 8.1" required>
+            </div>
+
+            <div class="form-group">
+              <label>Output / Hasil Default</label>
+              <input type="text" id="presetOutput" class="form-control" value="Terlaksana">
+            </div>
+
+            <button type="submit" class="btn btn-orange" style="width: 100%; justify-content: center; margin-top: 6px;">
+              + Tambahkan ke Daftar Tombol Cepat
+            </button>
+          </form>
         </div>
 
         <div class="card">
-          <div class="card-title">👨‍💼 Atasan Langsung & Dokumen</div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <span style="font-size: 0.8rem; font-weight: 700;">Daftar Tombol Cepat (<span id="presetCount">0</span>)</span>
+            <a href="#" style="font-size: 0.75rem; color: var(--primary); text-decoration: none;" onclick="loadStandardPresets()">Muat Contoh Preset Standard</a>
+          </div>
+          <div id="customPresetList">
+            <!-- Rendered Dynamically -->
+          </div>
+        </div>
+      </div>
+
+      <!-- MENU 3: PROFIL (DATA PEGAWAI & PIMPINAN) -->
+      <div id="tab-profil" class="tab-content" style="display: none;">
+        <div class="card">
+          <div class="card-title">👤 DATA PEGAWAI & PIMPINAN</div>
+          <p style="font-size: 0.75rem; color: #64748b; margin-bottom: 14px;">
+            Data ini otomatis digunakan pada setiap dokumen LKB dan tersimpan secara permanen.
+          </p>
+
+          <div class="section-title-orange">Identitas Pegawai</div>
           <div class="form-group">
-            <label>Kota / Lokasi Surat</label>
+            <label>Nama Pegawai & Gelar</label>
+            <input type="text" id="profNama" class="form-control" placeholder="Contoh: Ahmad Yunus, S.Kom" oninput="updatePrintMeta()">
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label>NIP</label>
+              <input type="text" id="profNip" class="form-control" placeholder="199108312025051003" oninput="updatePrintMeta()">
+            </div>
+            <div class="form-group">
+              <label>Pangkat / Golongan</label>
+              <input type="text" id="profPangkat" class="form-control" placeholder="III / a" oninput="updatePrintMeta()">
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label>Jabatan</label>
+              <input type="text" id="profJabatan" class="form-control" placeholder="Guru Informatika" oninput="updatePrintMeta()">
+            </div>
+            <div class="form-group">
+              <label>Unit Kerja</label>
+              <input type="text" id="profUnitKerja" class="form-control" placeholder="MTsN 19 Jakarta Selatan" oninput="updatePrintMeta()">
+            </div>
+          </div>
+
+          <div class="section-title-orange" style="margin-top: 14px;">Identitas Atasan / Pimpinan</div>
+          <div class="form-group">
+            <label>Nama Pimpinan & Gelar</label>
+            <input type="text" id="profNamaPimpinan" class="form-control" placeholder="Contoh: H. Cholis, S.Ag, M.Pd" oninput="updatePrintMeta()">
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label>Jabatan Pimpinan</label>
+              <input type="text" id="profJabatanPimpinan" class="form-control" placeholder="Kepala MTsN 19 Jakarta" oninput="updatePrintMeta()">
+            </div>
+            <div class="form-group">
+              <label>NIP Pimpinan</label>
+              <input type="text" id="profNipPimpinan" class="form-control" placeholder="197205121998031002" oninput="updatePrintMeta()">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Kota Tempat Laporan</label>
             <input type="text" id="profKota" class="form-control" value="Jakarta" oninput="updatePrintMeta()">
           </div>
-          <div class="form-group">
-            <label>Jabatan Pimpinan</label>
-            <input type="text" id="profJabatanPimpinan" class="form-control" value="Kepala Sekolah" oninput="updatePrintMeta()">
-          </div>
-          <div class="form-group">
-            <label>Nama Pimpinan (Atasan)</label>
-            <input type="text" id="profNamaPimpinan" class="form-control" placeholder="Nama Atasan beserta Gelar" onchange="autoSaveLKB()">
-          </div>
-          <div class="form-group">
-            <label>NIP Pimpinan</label>
-            <input type="text" id="profNipPimpinan" class="form-control" placeholder="NIP Atasan" onchange="autoSaveLKB()">
-          </div>
+
+          <button type="button" class="btn btn-dark" style="width: 100%; justify-content: center; margin-top: 10px;" onclick="saveProfilData()">
+            ✓ Simpan Data Profil
+          </button>
+        </div>
+      </div>
+
+      <!-- MENU 4: DATA USER (KHUSUS ADMIN) -->
+      <div id="tab-user" class="tab-content" style="display: none;">
+        <div class="card">
+          <div class="card-title">👥 KELOLA DATA USER (KHUSUS ADMIN)</div>
+          
+          <!-- FORM TAMBAH USER BARU -->
+          <form onsubmit="handleAdminSaveUser(event)" style="margin-bottom: 16px;">
+            <div class="section-title-orange">Tambah / Edit User Baru</div>
+            <div class="grid-2">
+              <div class="form-group">
+                <label>Username *</label>
+                <input type="text" id="adminUsername" class="form-control" required placeholder="username_guru">
+              </div>
+              <div class="form-group">
+                <label>Password (Default: pondoklabu)</label>
+                <input type="text" id="adminPassword" class="form-control" value="pondoklabu" required>
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="form-group">
+                <label>Nama Lengkap & Gelar</label>
+                <input type="text" id="adminNama" class="form-control" required placeholder="Nama Guru">
+              </div>
+              <div class="form-group">
+                <label>NIP</label>
+                <input type="text" id="adminNip" class="form-control" placeholder="NIP">
+              </div>
+            </div>
+
+            <div class="grid-3">
+              <div class="form-group">
+                <label>Jabatan</label>
+                <input type="text" id="adminJabatan" class="form-control" placeholder="Guru Ahli Pertama">
+              </div>
+              <div class="form-group">
+                <label>Unit Kerja</label>
+                <input type="text" id="adminUnitKerja" class="form-control" placeholder="Sekolah">
+              </div>
+              <div class="form-group">
+                <label>Role</label>
+                <select id="adminRole" class="form-control">
+                  <option value="guru">Guru</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-orange" style="width: 100%; justify-content: center;">
+              + Simpan User Baru
+            </button>
+          </form>
+
+          <hr style="margin: 14px 0; border: none; border-top: 1px solid var(--border-color);">
+
+          <!-- DAFTAR USER TERDAFTAR -->
+          <div style="font-size: 0.8rem; font-weight: 700; margin-bottom: 8px;">Daftar User Terdaftar</div>
+          <table class="table-custom">
+            <thead>
+              <tr>
+                <th>Username</th>
+                <th>Nama Guru</th>
+                <th>Role</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="adminUserTableBody">
+              <!-- Loaded dynamically -->
+            </tbody>
+          </table>
         </div>
       </div>
 
@@ -602,6 +784,7 @@
     let scriptUrl = localStorage.getItem('lkb_apps_script_url') || '';
     let currentUser = JSON.parse(localStorage.getItem('lkb_current_user')) || null;
     let kegiatanList = [];
+    let presetList = [];
 
     window.addEventListener('DOMContentLoaded', () => {
       const now = new Date();
@@ -680,31 +863,144 @@
       document.getElementById('txtUserNama').innerText = currentUser.nama;
       document.getElementById('txtUserRole').innerText = currentUser.role;
 
+      // Show Tab Data User if Admin
       if (currentUser.role === 'admin') {
-        document.getElementById('btnAdminModal').style.display = 'inline-flex';
+        document.getElementById('btnTabUser').style.display = 'inline-flex';
       }
 
-      // Populate Profil
+      // Load User Profiles into form
       document.getElementById('profNama').value = currentUser.nama || '';
       document.getElementById('profNip').value = currentUser.nip || '';
       document.getElementById('profJabatan').value = currentUser.jabatan || '';
       document.getElementById('profUnitKerja').value = currentUser.unit_kerja || '';
 
+      loadPresets();
       updatePrintMeta();
       loadLKBData();
     }
 
-    function switchTab(tabId) {
-      document.querySelectorAll('.nav-tabs .tab-item').forEach(t => t.classList.remove('active'));
-      event.target.classList.add('active');
-      document.getElementById('tab-input').style.display = tabId === 'tab-input' ? 'block' : 'none';
-      document.getElementById('tab-profil').style.display = tabId === 'tab-profil' ? 'block' : 'none';
+    // SWITCH TAB LOGIC
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.style.display = 'none');
+
+      if (tabName === 'input') {
+        document.getElementById('btnTabInput').classList.add('active');
+        document.getElementById('tab-input').style.display = 'block';
+      } else if (tabName === 'preset') {
+        document.getElementById('btnTabPreset').classList.add('active');
+        document.getElementById('tab-preset').style.display = 'block';
+      } else if (tabName === 'profil') {
+        document.getElementById('btnTabProfil').classList.add('active');
+        document.getElementById('tab-profil').style.display = 'block';
+      } else if (tabName === 'user' && currentUser.role === 'admin') {
+        document.getElementById('btnTabUser').classList.add('active');
+        document.getElementById('tab-user').style.display = 'block';
+        loadAdminUsers();
+      }
     }
 
     function setQuickTime(val) {
       document.getElementById('inputKegJam').value = val;
     }
 
+    // PRESET LOGIC
+    function loadPresets() {
+      const saved = localStorage.getItem(`lkb_presets_${currentUser.username}`);
+      presetList = saved ? JSON.parse(saved) : [];
+      renderPresets();
+    }
+
+    function savePresetsToStorage() {
+      localStorage.setItem(`lkb_presets_${currentUser.username}`, JSON.stringify(presetList));
+      renderPresets();
+    }
+
+    function handleSavePreset(e) {
+      e.preventDefault();
+      const newPreset = {
+        label: document.getElementById('presetLabel').value.trim(),
+        jam: document.getElementById('presetJam').value.trim() || '07.00',
+        volume: document.getElementById('presetVolume').value.trim() || '1 kegiatan',
+        uraian: document.getElementById('presetUraian').value.trim(),
+        output: document.getElementById('presetOutput').value.trim() || 'Terlaksana'
+      };
+
+      presetList.push(newPreset);
+      savePresetsToStorage();
+
+      document.getElementById('presetLabel').value = '';
+      document.getElementById('presetUraian').value = '';
+      alert('Preset berhasil ditambahkan!');
+    }
+
+    function renderPresets() {
+      // 1. Render in Tab 1 (Input Chips)
+      const chipsContainer = document.getElementById('presetChipsList');
+      chipsContainer.innerHTML = '';
+
+      if (presetList.length === 0) {
+        chipsContainer.innerHTML = `<span style="font-size: 0.75rem; color: #94a3b8; font-style: italic;">Belum ada preset. Klik "Kelola Preset" untuk menambahkan.</span>`;
+      } else {
+        presetList.forEach(p => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'preset-chip';
+          btn.innerText = `⚡ ${p.label}`;
+          btn.onclick = () => applyPreset(p);
+          chipsContainer.appendChild(btn);
+        });
+      }
+
+      // 2. Render in Tab 2 (Management List)
+      const listContainer = document.getElementById('customPresetList');
+      document.getElementById('presetCount').innerText = presetList.length;
+      listContainer.innerHTML = '';
+
+      if (presetList.length === 0) {
+        listContainer.innerHTML = `<p style="font-size: 0.75rem; color: #94a3b8; text-align: center; padding: 10px 0;">Belum ada tombol cepat. Tambahkan melalui form di atas.</p>`;
+      } else {
+        presetList.forEach((p, idx) => {
+          const div = document.createElement('div');
+          div.style.cssText = 'display:flex; justify-content:space-between; align-items:center; padding:8px 10px; border:1px solid #cbd5e1; border-radius:6px; margin-bottom:6px; font-size:0.8rem;';
+          div.innerHTML = `
+            <div>
+              <strong>${p.label}</strong>
+              <div style="font-size:0.75rem; color:#64748b;">${p.jam} | ${p.uraian}</div>
+            </div>
+            <button class="btn btn-danger btn-sm" onclick="deletePreset(${idx})">🗑️ Hapus</button>
+          `;
+          listContainer.appendChild(div);
+        });
+      }
+    }
+
+    function applyPreset(p) {
+      document.getElementById('inputKegJam').value = p.jam;
+      document.getElementById('inputKegUraian').value = p.uraian;
+      document.getElementById('inputKegOutput').value = p.output;
+      document.getElementById('inputKegVolume').value = p.volume;
+      alert(`Preset "${p.label}" diterapkan!`);
+    }
+
+    function deletePreset(idx) {
+      if (confirm('Hapus preset ini?')) {
+        presetList.splice(idx, 1);
+        savePresetsToStorage();
+      }
+    }
+
+    function loadStandardPresets() {
+      presetList = [
+        { label: "Presensi Kehadiran", jam: "06.30", volume: "1 kegiatan", uraian: "Melakukan presensi kehadiran harian dan persiapan tugas mengajar", output: "Terlaksana" },
+        { label: "Mengajar KBM", jam: "07.00 - 12.00", volume: "1 kegiatan", uraian: "Melaksanakan kegiatan proses belajar mengajar (KBM) di kelas", output: "Terlaksana" },
+        { label: "Piket Sekolah", jam: "07.00 - 14.00", volume: "1 kegiatan", uraian: "Melaksanakan tugas guru piket sekolah dan penegakan kedisiplinan siswa", output: "Terlaksana" },
+        { label: "Koreksi Tugas", jam: "13.00 - 14.30", volume: "1 kegiatan", uraian: "Memeriksa dan menilai lembar tugas harian siswa", output: "Terlaksana" }
+      ];
+      savePresetsToStorage();
+    }
+
+    // UPDATE PRINT & META
     function updatePrintMeta() {
       const nama = document.getElementById('profNama').value || '...................................................';
       const nip = document.getElementById('profNip').value || '...................................................';
@@ -732,7 +1028,6 @@
       document.getElementById('viewNamaPimpinan').innerText = nPimpinan ? `(${nPimpinan})` : '(Nama Pimpinan)';
       document.getElementById('viewNipPimpinan').innerText = nipPimpinan;
 
-      // Update Header Title Month
       const m = document.getElementById('selectBulan').value;
       const y = document.getElementById('inputTahun').value;
       const monthNames = ["JANUARI", "FEBRUARI", "MARET", "APRIL", "MEI", "JUNI", "JULI", "AGUSTUS", "SEPTEMBER", "OKTOBER", "NOVEMBER", "DESEMBER"];
@@ -742,6 +1037,12 @@
       document.getElementById('viewTglAkhir').innerText = `${lastDay} ${monthNames[parseInt(m)-1].toLowerCase()} ${y}`;
     }
 
+    function saveProfilData() {
+      autoSaveLKB();
+      alert('Data Profil berhasil disimpan!');
+    }
+
+    // LKB DATA MANAGEMENT
     async function loadLKBData() {
       if (!currentUser || !scriptUrl) return;
 
@@ -871,6 +1172,113 @@
           atasan_nip: document.getElementById('profNipPimpinan').value
         })
       });
+    }
+
+    // ADMIN USER MANAGEMENT
+    async function loadAdminUsers() {
+      const tbody = document.getElementById('adminUserTableBody');
+      tbody.innerHTML = '<tr><td colspan="4">Memuat data user...</td></tr>';
+
+      try {
+        const res = await fetch(scriptUrl, {
+          method: 'POST',
+          body: JSON.stringify({ action: 'getUsers' })
+        }).then(r => r.json());
+
+        if (res.success) {
+          tbody.innerHTML = '';
+          res.users.forEach(u => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td><strong>${u.username}</strong></td>
+              <td>${u.nama}</td>
+              <td><span style="background:#e2e8f0; padding:2px 6px; border-radius:4px; font-size:0.7rem; font-weight:bold;">${u.role}</span></td>
+              <td style="display:flex; gap:4px;">
+                <button class="btn btn-outline btn-sm" onclick="resetUserPassword('${u.username}', '${u.nama}', '${u.nip}', '${u.jabatan}', '${u.unit_kerja}', '${u.role}')">🔑 Reset Pass</button>
+                <button class="btn btn-danger btn-sm" onclick="deleteUserByAdmin('${u.username}')">🗑️ Hapus</button>
+              </td>
+            `;
+            tbody.appendChild(tr);
+          });
+        }
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="4" style="color:red">Error: ${err.message}</td></tr>`;
+      }
+    }
+
+    async function handleAdminSaveUser(e) {
+      e.preventDefault();
+      const userData = {
+        username: document.getElementById('adminUsername').value.trim(),
+        password: document.getElementById('adminPassword').value.trim() || 'pondoklabu',
+        nama: document.getElementById('adminNama').value.trim(),
+        nip: document.getElementById('adminNip').value.trim(),
+        jabatan: document.getElementById('adminJabatan').value.trim(),
+        unit_kerja: document.getElementById('adminUnitKerja').value.trim(),
+        role: document.getElementById('adminRole').value
+      };
+
+      try {
+        const res = await fetch(scriptUrl, {
+          method: 'POST',
+          body: JSON.stringify({ action: 'saveUser', userData: userData })
+        }).then(r => r.json());
+
+        if (res.success) {
+          alert(`User ${userData.username} berhasil disimpan!`);
+          document.getElementById('adminUsername').value = '';
+          document.getElementById('adminNama').value = '';
+          document.getElementById('adminNip').value = '';
+          loadAdminUsers();
+        }
+      } catch (err) {
+        alert('Gagal menyimpan user: ' + err.message);
+      }
+    }
+
+    async function resetUserPassword(username, nama, nip, jabatan, unit_kerja, role) {
+      if (confirm(`Reset password user '${username}' ke password default ('pondoklabu')?`)) {
+        const userData = {
+          username: username,
+          password: 'pondoklabu',
+          nama: nama,
+          nip: nip,
+          jabatan: jabatan,
+          unit_kerja: unit_kerja,
+          role: role
+        };
+
+        try {
+          const res = await fetch(scriptUrl, {
+            method: 'POST',
+            body: JSON.stringify({ action: 'saveUser', userData: userData })
+          }).then(r => r.json());
+
+          if (res.success) {
+            alert(`Password untuk '${username}' berhasil di-reset menjadi 'pondoklabu'!`);
+            loadAdminUsers();
+          }
+        } catch (err) {
+          alert('Gagal reset password: ' + err.message);
+        }
+      }
+    }
+
+    async function deleteUserByAdmin(targetUsername) {
+      if (confirm(`Hapus akun '${targetUsername}'?`)) {
+        try {
+          const res = await fetch(scriptUrl, {
+            method: 'POST',
+            body: JSON.stringify({ action: 'deleteUser', targetUsername: targetUsername })
+          }).then(r => r.json());
+
+          if (res.success) {
+            loadAdminUsers();
+          }
+        } catch (err) {
+          alert('Gagal menghapus: ' + err.message);
+        }
+      }
     }
 
     function exportToExcel() {
